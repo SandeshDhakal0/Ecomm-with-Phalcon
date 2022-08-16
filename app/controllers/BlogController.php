@@ -15,8 +15,8 @@ class BlogController extends ControllerBase
         // $blogList=Blog::find();
         // var_dump($blogList);die;
         // var_dump($this->request->getPost());die();
-        if($this->request->getPost() == true){
-            
+        if($this->request->hasFiles() == true){
+        
             $blog = new Blog();
             
             $title = $this->request->getPost('title');

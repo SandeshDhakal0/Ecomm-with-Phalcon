@@ -11,8 +11,9 @@ class Blog extends \Phalcon\Mvc\Model
 
     public function initialize()
     {
-        // $this->setSchema("ecommerce");
+        // The model name and table name is different hence we set the source here Model=Blog, Table=Blogs
        $this->setSource("Blogs");
+       
     }
 
 
