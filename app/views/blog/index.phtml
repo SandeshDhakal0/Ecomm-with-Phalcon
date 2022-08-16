@@ -1,0 +1,68 @@
+<?php $this->partial('layouts/header');?>
+
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+
+                <div class="col-sm-6">
+                    <h1 class="m-0">Blog Details</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Add Post</h3>
+                </div>
+                <form action='create' method="post" enctype="multipart/form-data">
+                    <div class="card-body">
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-building"></i></span>
+                            </div>
+                            <input type="text" class="form-control" name="title" placeholder="Blog Title">
+                        </div>
+                        <br>
+                    
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
+                            </div>
+                            <textarea class="form-control" name="desc"id="exampleFormControlTextarea1" placeholder="Enter Blog Description" rows="3"></textarea>
+                        </div>
+
+                        <br>
+                        <div class="row" style="height:150px;">
+                            <div class="col col-sm-10">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <label class="custom-file-label" for="blog_image" style="font-weight : lighter;">Upload Blog Image</label>
+                                            <input type="file" class="custom-file-input" name="blog_image" id="blog_image">
+                                            <!-- onchange="readURL(this,0)"  -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col" id="preview_image">
+                                <img src="#" id="previewImg" alt="Insert Image" style="width: 75%; height:auto;">
+                            </div>
+                        </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+</div>
+
+
+<?php $this->partial('layouts/footer'); ?>
