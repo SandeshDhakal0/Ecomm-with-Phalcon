@@ -2,4 +2,17 @@
 <?php if(property_exists($single,'id')):?>
 <?=$single->id ?>
 <?=$single->email ?>
-<?php endif;?>
+
+<?php foreach($single-> project as $p):?>
+    <?=$p->id ?>
+    <?=$p->title ?>
+    <?php endforeach;?>
+
+<?php endif; ?>
+
+<hr/>
+
+<?php foreach($all as $user): ?>
+    <?=$user->id?>
+    <?=$user->email?>
+    <?php endforeach; ?>

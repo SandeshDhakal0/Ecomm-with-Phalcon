@@ -107,6 +107,13 @@ $di->set('flash', function () {
     return $flash;
 });
 
+
+// $di->setShared('session', function(){
+//     $session = new \Phalcon\Session\Adapter\Files();
+//     $session->start();
+//     return $session;
+// });
+
 /**
  * Start the session the first time some component request the session service
  */

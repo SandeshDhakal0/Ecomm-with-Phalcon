@@ -1,19 +1,18 @@
 <?php
 use \Phalcon\Mvc\Model\Behavior\SoftDelete;
 
-class User extends \Phalcon\Mvc\Model 
+class User extends BaseModel 
 {
     
     public function initialize()
     {
+        //local field,reference Model,reference field
+        $this->hasMany('id','Project','user_id');
+
         $this->addBehavior(new SoftDelete([
             'field' => 'deleted',
             'value' => 1,
         ]));
     }
 
-    public function beforeCreate()
-    {
-        $this->created_at = date('Y-m-d H:i:s');
-    }
-}
+} 

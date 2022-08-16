@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Phalcon\Di\FactoryDefault;
@@ -34,6 +35,22 @@ try {
      * Include Autoloader
      */
     include APP_PATH . '/config/loader.php';
+
+    $di['modelsMetadata'] = function () {
+        $metaData = new \Phalcon\Mvc\Model\MetaData\Memory(
+            [
+                "prefix"   => "my-prefix",
+                "lifetime" => 86400,
+            ]
+        );
+        return $metaData;
+    };
+// For using session 
+// $di->setShared('session', function(){
+//     $session = new \Phalcon\Session\Adapter\Files();
+//     $session->start();
+//     return $session;
+// });
 
     /**
      * Handle the request
