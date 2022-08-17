@@ -1,96 +1,70 @@
-<?php 
+<?php
 
-use Phalcon\Mvc\Dispatcher,
-    Phalcon\Events\Event;
+use Phalcon\Acl\Adapter\Memory;
+use Phalcon\Acl\Role;
+use Phalcon\Acl\Component;
 
-class Permission extends \Phalcon\Mvc\User\Plugin
-{
-    protected $_publicResources = [
-        'index' => '*',
-        'signin' => '*'
-    ];
-    protected $_userResources = [ 
-        'dashboard' => ['*']
-    ];
-    protected $_adminResources = [
-        'admin' => ['*']
-    ];
+$acl = new Memory();
 
-    protected function _getAcl()
-    {
-        if(!isset($this->persistent->acl))
-        {
-            $acl = new \Phalcon\Acl\Adapter\Memory();
-            $acl->setDefaultAction(Phalcon\Acl::DENY);
+/**
+ * Add the roles
+ */
+$acl->addRole('admin');
+$acl->addRole('user');
+$acl->addRole('guest');
 
-            $roles = [
-                'guest'=> new \Phalcon\Acl\Role('guest'),
-                'user' => new \Phalcon\Acl\Role('user'),
-                'admin' => new \Phalcon\Acl\Role('admin'),
-            ];
-            foreach($roles as $role){
-                $acl->addRole($role);
-            }
-            //Public Resource 
-            foreach($this->_publicResources as $resource => $action){
-                $acl->addResource(new \Phalcon\Acl\Resource($resource),$action);
-            }
-            //User Resource
-            foreach($this->_userResources as $resource => $action){
-                $acl->addResource(new \Phalcon\Acl\Resource($resource),$action);
-            }
-            //Admin Resource
-            foreach($this->_adminResources as $resource => $action){
-                $acl->addResource(new \Phalcon\Acl\Resource($resource),$action);
-            }
-            //Allow all roles to access the Public Resources
-            foreach($roles as $role){
-                foreach($this->_publicResources as $resource => $action){
-                    $acl->allow($role->getName(), $resource, '*');
-                }
-            }
-            // Allow User and Admin to access the UserResources
-            foreach($this->_userResources as $resource => $actions){
-                foreach($actions as $action){
-                    $acl->allow('user',$resource, $action);
-                    $acl->allow('admin',$resource, $action);
-                }
-            }
-            // Allow admin to access Admin resources
-            foreach($this->_adminResources as $resource => $actions){
-                foreach($actions as $action){
-                    $acl->allow('admin',$resource, $action);
-                }
-            }
-                $this->persistent->acl = $acl;
-        }
-        return $this->persistent->acl;
-    }
 
-    public function beforeExecuteRoute(Event $event, Dispatcher $dispatcher)
-    {
-        $role = $this->session->get('role');
-        if(!$role){
-            $role = 'guest';
-        }
+/**
+ * Add the Components
+ */
 
-        // Get the current controller/action from the dispatcher
-        $controller = $dispatcher->getControllerName();
-        $action     = $dispatcher->getActionName();
-        // Get the ACL Rule List
-        $acl = $this->_getAcl();
+$acl->addComponent(
+    'main',
+    [
+        'dashboard',
+        'users',
+        'view',
+    ]
+);
 
-        //See if they have the permission
-        $allowed = $acl->allowed($role, $controller, $action);
-        if ($allowed != Phalcon\Acl::ALLOW)
-        {
-            // Allowed
-            $dispatcher->forward([
-                'controller' => 'index',
-                'action' => 'index'
-            ]);
-            //Stops the dispatcher at the current operations
-            return false;
-        }
-    }
-}
+$acl->addComponent(
+    'reports',
+    [
+        'list',
+        'add',
+        'view',
+    ]
+);
+
+$acl->addComponent(
+    'session',
+    [
+        'login',
+        'logout',
+    ]
+);
+
+/**
+ * Now tie them all together 
+ */
+$acl->allow('admin', 'main', 'users');
+$acl->allow('admin', 'reports', ['list', 'add']);
+$acl->allow('*', 'session', '*');
+$acl->allow('*', '*', 'view');
+
+$acl->deny('guest', '*', 'view');
+
+// true - defined explicitly
+$acl->isAllowed('admin', 'main', 'dashboard');
+
+// true - defined with wildcard
+$acl->isAllowed('admin', 'session', 'login');
+
+// true - defined with wildcard
+$acl->isAllowed('user', 'reports', 'view');
+
+// false - defined explicitly
+$acl->isAllowed('guest', 'reports', 'view');
+
+// false - default access level
+$acl->isAllowed('guest', 'reports', 'add');

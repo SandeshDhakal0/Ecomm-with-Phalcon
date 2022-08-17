@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Phalcon\Di\FactoryDefault;
+// use Phalcon\Di;
+// use Phalcon\Mvc\Dispatcher;
 
 error_reporting(E_ALL);
 
@@ -54,18 +56,34 @@ try {
     //     return $router;
     // });
 
-    $di->set('dispatcher',function() use($di){
-        $eventsManager = $di->getShared('eventsManager');
-        //Custom ACL Class
-        $permission = new Permission();
-        //Listen the events from the permission class
-        $eventsManager->attach('dispatch',$permission);
+        $di->set('flash',function(){
+            $flash = new \Phalcon\Flash\Session([
+                'error'=>'alert alert-danger',
+                'success'=>'alert alert-success',
+                'notice' => 'alert alert-info',
+                'warning'=> 'alert alert-warning'
+            ]);
+            return $flash;
+        });
 
-        $dispatcher = new \Phalcon\Mvc\Dispatcher();
-        $dispatcher->setEventsManager($eventsManager);
+
+
+// Custom dispatcher overwrites the default
+
+// include APP_PATH . '/config/Permission.php';
+
+//     $di->set('dispatcher',function() use($di){
+//         $eventsManager = $di->getShared('eventsManager');
+//         //Custom ACL Class
+//         $permission = new Permission();
+//         //Listen the events from the permission class
+//         $eventsManager->attach('dispatch',$permission);
+
+//         $dispatcher = new \Phalcon\Mvc\Dispatcher();
+//         $dispatcher->setEventsManager($eventsManager);
         
-        return $dispatcher;
-    });
+//         return $dispatcher;
+//     });
 
     /**
      * Handle the request

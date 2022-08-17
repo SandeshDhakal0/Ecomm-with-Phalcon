@@ -17,4 +17,6 @@ if ($uri !== '/' && file_exists(__DIR__ . '/public' . $uri)) {
 
 $_GET['_url'] = $_SERVER['REQUEST_URI'];
 
+// require_once __DIR__ . '/app/config/permission.php';
 require_once __DIR__ . '/public/index.php';
+

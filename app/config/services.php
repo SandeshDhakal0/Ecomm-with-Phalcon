@@ -125,6 +125,21 @@ $di->set('flash', function () {
 /**
  * Start the session the first time some component request the session service
  */
+
+// $di->set('dispatcher',function() use($di){
+//     $eventsManager = $di->getShared('eventsManager');
+//     //Custom ACL Class
+//     $permission = new Permission();
+//     //Listen the events from the permission class
+//     $eventsManager->attach('dispatch',$permission);
+
+//     $dispatcher = new \Phalcon\Mvc\Dispatcher();
+//     $dispatcher->setEventsManager($eventsManager);
+    
+//     return $dispatcher;
+// });
+
+
 $di->setShared('session', function () {
     $session = new SessionManager();
     $files = new SessionAdapter([
