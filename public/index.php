@@ -54,6 +54,19 @@ try {
     //     return $router;
     // });
 
+    $di->set('dispatcher',function() use($di){
+        $eventsManager = $di->getShared('eventsManager');
+        //Custom ACL Class
+        $permission = new Permission();
+        //Listen the events from the permission class
+        $eventsManager->attach('dispatch',$permission);
+
+        $dispatcher = new \Phalcon\Mvc\Dispatcher();
+        $dispatcher->setEventsManager($eventsManager);
+        
+        return $dispatcher;
+    });
+
     /**
      * Handle the request
      */
