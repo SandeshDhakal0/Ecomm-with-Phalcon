@@ -30,6 +30,14 @@ $di->setShared('url', function () {
     return $url;
 });
 
+
+    // Router
+// $di->set('router',function(){
+// $router = new \Phalcon\Mvc\Router();
+// // $router->add();
+// return $router;
+// });
+
 /**
  * Setting up the view component
  */

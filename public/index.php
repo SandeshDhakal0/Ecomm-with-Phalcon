@@ -45,12 +45,14 @@ try {
         );
         return $metaData;
     };
-// For using session 
-// $di->setShared('session', function(){
-//     $session = new \Phalcon\Session\Adapter\Files();
-//     $session->start();
-//     return $session;
-// });
+
+
+    // Router
+    // $di->set('router',function(){
+    //     $router = new \Phalcon\Mvc\Router();
+    //     // $router->add();
+    //     return $router;
+    // });
 
     /**
      * Handle the request

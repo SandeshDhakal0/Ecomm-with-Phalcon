@@ -13,6 +13,11 @@ class UserController extends \Phalcon\Mvc\Controller
     ]);
  }
 
+ public function loginAction()
+ {
+     echo $this->filter->sanitize('50a',"int");
+ }
+
  public function createAction()
  {
     $user = new User();
