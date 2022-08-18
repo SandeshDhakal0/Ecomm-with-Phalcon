@@ -1,42 +1,56 @@
 <?php
 
+use Phalcon\Acl\Adapter\Memory;
+
 class SigninController extends ControllerBase
 {
 
     public function indexAction()
     {
+        
     }
 
     public function doSigninAction()
     {
-        $this->view->disable();
-        $user = User::findFirst([
-            "email = :email: AND password = :password:",
-            "bind" => [
-                "email" => $this->request->getPost('email'),
-                "password" => $this->request->getPost('password')
+// ACL for login 
+        $acl = new Memory();
+        $acl->addRole('admin');
+        $acl->addRole('user');
+        // $acl->addRole('guest');
+        $acl->addComponent(
+            'adminPrivelage',
+            [
+                'dashboard'
             ]
-        ]);
+        );
+        $acl->addComponent(
+            'userPrivelage',
+            [
+                'front'
+            ]
+        );
+        $acl->allow('admin', 'adminPrivelage', 'dashboard');
+        $acl->allow('user','userPrivelage','front');
+// Signin starts from here
+        $this->view->disable();
+        $user = User::findFirst("email='" . $this->request->getPost('email') . "'");
         if ($user) {
-            $this->session->set('id',$user->id);
-            $this->session->set('role',$user->role);
-            $this->response->redirect("dashboard/index");
+            if ($user->password == $this->request->getPost('password')) {
+                if ($acl->isAllowed('admin', 'adminPrivelage', 'dashboard')) {
+                    $this->session->set('auth', ['id' => $user->id, 'role' => $user->role]);
+                    $this->response->redirect("dashboard");
+                } else {
+                    echo "no user found";
+                } 
+                if ($acl->isAllowed('user','userPrivelage','front')) {
+                    $this->session->set('auth', ['id' => $user->id, 'role' => $user->role]);
+                    $this->response->redirect("front");
+                } else {
+                echo "Cannot be logged in.";
+            } 
+            }
         }
-        $this->flashSession->error('Incorrect Credentials');
-        return $this->response->redirect("signin");
-    }
-    // public function doSigninAction()
-    // {
-    //     if($this->request->isAjax() == true){
-    //         $user = new Users();
-    //         $email = $this->request->getPost('email');
-    //         $password = $this->request->getPost('password');
+    }}
 
-    //         if( username != "" && password != ""  ){
-    //             $user->email = $email;
-    //             $user->password = $password;
-    //             return $this->response
-    //         }
-    // }
-}
-
+// $this->response->redirect('/profile');
+// $this->view->disable();

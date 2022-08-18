@@ -1,12 +1,12 @@
 <?php
 
-class AdminController extends ControllerBase
+class DashboardController extends ControllerBase
 {
    
     public function indexAction()
     {
-        echo "Dashboard";
-        die;
+        echo "Hello";
+     
     }
     
 }

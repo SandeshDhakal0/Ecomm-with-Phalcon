@@ -70,7 +70,9 @@ try {
 
 // Custom dispatcher overwrites the default
 
-// include APP_PATH . '/config/Permission.php';
+include APP_PATH . '/config/Permission.php';
+
+
 
 //     $di->set('dispatcher',function() use($di){
 //         $eventsManager = $di->getShared('eventsManager');
