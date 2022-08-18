@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use Phalcon\Escaper;
 use Phalcon\Flash\Direct as Flash;
+// use Phalcon\Flash\Session as FlashSession;
 use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Php as PhpEngine;
@@ -101,6 +102,32 @@ $di->setShared('modelsMetadata', function () {
 /**
  * Register the session flash service with the Twitter Bootstrap classes
  */
+
+// $di->set('flash',function(){
+//     $flash = new \Phalcon\Flash\Session([
+//         'error'=>'alert alert-danger',
+//         'success'=>'alert alert-success',
+//         'notice' => 'alert alert-info',
+//         'warning'=> 'alert alert-warning'
+//     ]);
+//     return $flash;
+// });
+
+
+// $di->set('flash', function () {
+//     $escaper = new Escaper();
+//     $flash = new Flash($escaper);
+//     $flash->setImplicitFlush(false);
+//     $flash->setCssClasses([
+//         'error'   => 'alert alert-danger',
+//         'success' => 'alert alert-success',
+//         'notice'  => 'alert alert-info',
+//         'warning' => 'alert alert-warning'
+//     ]);
+
+//     return $flash;
+// });
+
 $di->set('flash', function () {
     $escaper = new Escaper();
     $flash = new Flash($escaper);
@@ -122,6 +149,14 @@ $di->set('flash', function () {
 //     return $session;
 // });
 
+// $di->set('flash', function () {
+//     return new Flash(array(
+//         'error'   => 'alert alert-danger',
+//         'success' => 'alert alert-success',
+//         'notice'  => 'alert alert-info',
+//         'warning' => 'alert alert-warning'
+//     ));
+// });
 /**
  * Start the session the first time some component request the session service
  */
@@ -139,6 +174,19 @@ $di->set('flash', function () {
 //     return $dispatcher;
 // });
 
+$di->set('flashSession', function(){
+    $escaper = new Escaper();
+    $flashSession = new Phalcon\Flash\Session($escaper);
+    
+    $flashSession->setCssClasses([
+        'error'   => 'alert alert-danger msg',
+        'success' => 'alert alert-success msg',
+        'notice'  => 'alert alert-info msg',
+        'warning' => 'alert alert-warning msg'
+    ]);
+
+    return $flashSession;
+});
 
 $di->setShared('session', function () {
     $session = new SessionManager();

@@ -38,15 +38,15 @@ try {
      */
     include APP_PATH . '/config/loader.php';
 
-    $di['modelsMetadata'] = function () {
-        $metaData = new \Phalcon\Mvc\Model\MetaData\Memory(
-            [
-                "prefix"   => "my-prefix",
-                "lifetime" => 86400,
-            ]
-        );
-        return $metaData;
-    };
+    // $di['modelsMetadata'] = function () {
+    //     $metaData = new \Phalcon\Mvc\Model\MetaData\Memory(
+    //         [
+    //             "prefix"   => "my-prefix",
+    //             "lifetime" => 86400,
+    //         ]
+    //     );
+    //     return $metaData;
+    // };
 
 
     // Router
@@ -56,15 +56,15 @@ try {
     //     return $router;
     // });
 
-        $di->set('flash',function(){
-            $flash = new \Phalcon\Flash\Session([
-                'error'=>'alert alert-danger',
-                'success'=>'alert alert-success',
-                'notice' => 'alert alert-info',
-                'warning'=> 'alert alert-warning'
-            ]);
-            return $flash;
-        });
+        // $di->set('flash',function(){
+        //     $flash = new \Phalcon\Flash\Session([
+        //         'error'=>'alert alert-danger',
+        //         'success'=>'alert alert-success',
+        //         'notice' => 'alert alert-info',
+        //         'warning'=> 'alert alert-warning'
+        //     ]);
+        //     return $flash;
+        // });
 
 
 

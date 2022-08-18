@@ -51,8 +51,7 @@ $acl->allow('admin', 'main', 'users');
 $acl->allow('admin', 'reports', ['list', 'add']);
 $acl->allow('*', 'session', '*');
 $acl->allow('*', '*', 'view');
-
-$acl->deny('guest', '*', 'view');
+// $acl->deny('guest', '*', 'view');
 
 // true - defined explicitly
 $acl->isAllowed('admin', 'main', 'dashboard');
@@ -61,10 +60,11 @@ $acl->isAllowed('admin', 'main', 'dashboard');
 $acl->isAllowed('admin', 'session', 'login');
 
 // true - defined with wildcard
-$acl->isAllowed('user', 'reports', 'view');
+// $acl->isAllowed('user', 'reports', 'view');
 
 // false - defined explicitly
-$acl->isAllowed('guest', 'reports', 'view');
+// $acl->isAllowed('guest', 'reports', 'view');
 
 // false - default access level
-$acl->isAllowed('guest', 'reports', 'add');
+// $acl->isAllowed('guest', 'reports', 'add');
+
