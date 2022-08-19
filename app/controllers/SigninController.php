@@ -7,60 +7,58 @@ class SigninController extends ControllerBase
 
     public function indexAction()
     {
-        
+
     }
 
     public function doSigninAction()
-    {
-// ACL for login 
+    { // ACL for login 
         $acl = new Memory();
         $acl->addRole('admin');
         $acl->addRole('user');
         // $acl->addRole('guest');
         $acl->addComponent(
             'adminPrivelage',
-            [
-                'dashboard'
-            ]
+        [
+            'dashboard'
+        ]
         );
         $acl->addComponent(
             'userPrivelage',
-            [
-                'front'
-            ]
+        [
+            'front'
+        ]
         );
         $acl->allow('admin', 'adminPrivelage', 'dashboard');
-        $acl->allow('user','userPrivelage','front');
-// Signin starts from here
+        $acl->allow('user', 'userPrivelage', 'front'); // Signin starts from here
         $this->view->disable();
         $user = User::findFirst([
-                "email = :email: AND password = :password:",
-                "bind" => [
-                    "email" => $this->request->getPost('email'),
-                    "password" => $this->request->getPost('password')
-                ]
+            "email = :email: AND password = :password:",
+            "bind" => [
+                "email" => $this->request->getPost('email'),
+                "password" => $this->request->getPost('password')
+            ]
         ]);
         if ($user) {
             if ($user->password == $this->request->getPost('password')) {
-                $this->session->set('id',$user->id);
+                $this->session->set('id', $user->id);
                 $this->session->set('role', $user->role);
-                if($user->role == 'admin'){
+                if ($user->role == 'admin') {
                     $this->response->redirect("dashboard");
-                }else{
+                }
+                else {
 
                     $this->response->redirect("front");
-                }   
-            }else{
-                $this->flashSession->error("incorrect credentials");
-                $this->response->redirect("signin");
+                }
             }
-        }else{
+        }
+        else {
             $this->flashSession->error("User Not Found");
-                $this->response->redirect("signin");
+            $this->response->redirect("signin");
         }
     }
 }
-    
+
+
 
 // $this->response->redirect('/profile');
 // $this->view->disable();

@@ -6,7 +6,13 @@ class IndexController extends ControllerBase
 
     public function indexAction()
     {
-        echo "Hello World";
+
+    }
+
+    public function signoutAction()
+    {
+        $this->session->destroy();
+        $this->response->redirect('signin');
     }
 
     public function startSessionAction()
@@ -18,6 +24,8 @@ class IndexController extends ControllerBase
         ]);
         $this->session->set('name','Jesse');
     }
+
+
 
     public function getSessionAction()
     {

@@ -1,6 +1,7 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1)
+;
 
 use Phalcon\Di\FactoryDefault;
 // use Phalcon\Di;
@@ -56,34 +57,31 @@ try {
     //     return $router;
     // });
 
-        // $di->set('flash',function(){
-        //     $flash = new \Phalcon\Flash\Session([
-        //         'error'=>'alert alert-danger',
-        //         'success'=>'alert alert-success',
-        //         'notice' => 'alert alert-info',
-        //         'warning'=> 'alert alert-warning'
-        //     ]);
-        //     return $flash;
-        // });
+    // $di->set('flash',function(){
+    //     $flash = new \Phalcon\Flash\Session([
+    //         'error'=>'alert alert-danger',
+    //         'success'=>'alert alert-success',
+    //         'notice' => 'alert alert-info',
+    //         'warning'=> 'alert alert-warning'
+    //     ]);
+    //     return $flash;
+    // });
 
 
-
-// Custom dispatcher overwrites the default
-
-include APP_PATH . '/config/Permission.php';
+    // Custom dispatcher overwrites the default
+    // include APP_PATH . '/config/Permission.php';
 
 
-
-//     $di->set('dispatcher',function() use($di){
+    //     $di->set('dispatcher',function() use($di){
 //         $eventsManager = $di->getShared('eventsManager');
 //         //Custom ACL Class
 //         $permission = new Permission();
 //         //Listen the events from the permission class
 //         $eventsManager->attach('dispatch',$permission);
-
-//         $dispatcher = new \Phalcon\Mvc\Dispatcher();
+    //         $dispatcher = new \Phalcon\Mvc\Dispatcher();
 //         $dispatcher->setEventsManager($eventsManager);
-        
+
+    
 //         return $dispatcher;
 //     });
 
@@ -92,8 +90,9 @@ include APP_PATH . '/config/Permission.php';
      */
     $application = new \Phalcon\Mvc\Application($di);
 
-        echo $application->handle($_SERVER['REQUEST_URI'])->getContent();
-    } catch (\Exception $e) {
-        echo $e->getMessage() . '<br>';
-        echo '<pre>' . $e->getTraceAsString() . '</pre>';
-    }
+    echo $application->handle($_SERVER['REQUEST_URI'])->getContent();
+}
+catch (\Exception $e) {
+    echo $e->getMessage() . '<br>';
+    echo '<pre>' . $e->getTraceAsString() . '</pre>';
+}

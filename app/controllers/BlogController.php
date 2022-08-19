@@ -12,9 +12,6 @@ class BlogController extends ControllerBase
     public function createAction()
     {
 
-        // $blogList=Blog::find();
-        // var_dump($blogList);die;
-        // var_dump($this->request->getPost());die();
         if($this->request->hasFiles() == true){
         
             $blog = new Blog();
@@ -34,7 +31,14 @@ class BlogController extends ControllerBase
                 echo "Unable to proceed";
                 die;
             }
-    }}}
+    }
+}
+public function landingAction()
+{
+
+}
+
+}
 
     
 
