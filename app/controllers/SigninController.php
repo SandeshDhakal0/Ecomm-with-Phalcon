@@ -33,24 +33,34 @@ class SigninController extends ControllerBase
         $acl->allow('user','userPrivelage','front');
 // Signin starts from here
         $this->view->disable();
-        $user = User::findFirst("email='" . $this->request->getPost('email') . "'");
+        $user = User::findFirst([
+                "email = :email: AND password = :password:",
+                "bind" => [
+                    "email" => $this->request->getPost('email'),
+                    "password" => $this->request->getPost('password')
+                ]
+        ]);
         if ($user) {
             if ($user->password == $this->request->getPost('password')) {
-                if ($acl->isAllowed('admin', 'adminPrivelage', 'dashboard')) {
-                    $this->session->set('auth', ['id' => $user->id, 'role' => $user->role]);
+                $this->session->set('id',$user->id);
+                $this->session->set('role', $user->role);
+                if($user->role == 'admin'){
                     $this->response->redirect("dashboard");
-                } else {
-                    echo "no user found";
-                } 
-                if ($acl->isAllowed('user','userPrivelage','front')) {
-                    $this->session->set('auth', ['id' => $user->id, 'role' => $user->role]);
+                }else{
+
                     $this->response->redirect("front");
-                } else {
-                echo "Cannot be logged in.";
-            } 
+                }   
+            }else{
+                $this->flashSession->error("incorrect credentials");
+                $this->response->redirect("signin");
             }
+        }else{
+            $this->flashSession->error("User Not Found");
+                $this->response->redirect("signin");
         }
-    }}
+    }
+}
+    
 
 // $this->response->redirect('/profile');
 // $this->view->disable();
