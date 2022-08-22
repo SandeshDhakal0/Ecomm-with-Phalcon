@@ -12,7 +12,7 @@ class Blog extends \Phalcon\Mvc\Model
     public function initialize()
     {
         // The model name and table name is different hence we set the source here Model=Blog, Table=Blogs
-       $this->setSource("Blogs");
+    //    $this->setSource("Blogs");
        
     }
 
