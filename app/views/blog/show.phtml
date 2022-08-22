@@ -1,4 +1,39 @@
-<?php $this->partial('layouts/header');?>
+<?php $this->partial('layouts/header'); ?>
+<div class="col-md-12">
+<div class="table-responsive">
+    <table class="table table-responsive">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Image</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach ($blog as $blogs) { ?>
+    <tr>
+      <th><?php echo $blogs->id; ?></th>
+      <td><?php echo $blogs->title ?></td>
+      <td ><?php echo substr($blogs->blog_description,'0','30').'....'   ?></td>
+      <td style="text-align: center;" ><img src="../img/blog/<?php echo $blogs->blog_image; ?>" id="image" style="height : 80px; width : 80px" ></td>
+      <td>
+        <a href="/blog<?php echo $blogs->id?>" class="btn btn-sm btn-success">
+        <i class="fa fa-2x fa-edit"></i>
+        </a>
+        <a href="#" class="btn btn-sm btn-danger">
+        <i class="fa fa-danger fa-2x fa-trash"></i>      
+        </a>
+    </td>
+    </tr>
+    <?php } ?>
 
 
-<?php $this->partial('layouts/footer'); ?>
+    
+
+  </tbody>
+</table>
+    </div>
+</div>
+    <?php $this->partial('layouts/footer'); ?>

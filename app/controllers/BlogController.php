@@ -12,7 +12,6 @@ class BlogController extends ControllerBase
 
     public function createAction()
     {
-        
         $blog = new Blog();
         $title = $this->request->getPost('title');
         $blog_description = $this->request->getPost('desc');
@@ -41,6 +40,8 @@ class BlogController extends ControllerBase
                 
                 $this->response->redirect("blog");
             }
+
+                
             
             
             
@@ -48,8 +49,11 @@ class BlogController extends ControllerBase
     }
     public function showAction()
     {
-        
-        
+        $data = Blog::find();
+        $this->view->blog = $data;
+
     }
+
+
 
 }

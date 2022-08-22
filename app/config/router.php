@@ -13,3 +13,12 @@ $router->add('/superhero/jump',[
     'controller'=>'test',
     'action'=>'jump'
 ]);
+
+$router->add('/blog',[
+    'controller'=>'blog',
+    'action'=>'index'
+]);
+$router->add('/show',[
+    'controller'=>'blog',
+    'action'=>'show'
+]);

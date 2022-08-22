@@ -44,7 +44,7 @@
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <label class="custom-file-label" for="blog_image" style="font-weight : lighter;">Upload Blog Image</label>
-                                            <input type="file" class="custom-file-input" name="blog_image" id="blog_image">
+                                            <input type="file" class="custom-file-input" name="blog_image" id="blog_image" onchange="readURL(this)">
                                             <!-- onchange="readURL(this,0)"  -->
                                         </div>
                                     </div>
@@ -69,6 +69,27 @@
       setTimeout(function(){
     $('.alert').hide();
   }, 3000);
+
+
+ 
+
+// Preview Multiple image of different input.
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            
+               
+            
+                $("#previewImg").attr("src", e.target.result);
+          
+           
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
 </script>
 
 
