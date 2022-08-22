@@ -12,6 +12,7 @@ class BlogController extends ControllerBase
 
     public function createAction()
     {
+        
         $blog = new Blog();
         $title = $this->request->getPost('title');
         $blog_description = $this->request->getPost('desc');
@@ -23,20 +24,32 @@ class BlogController extends ControllerBase
                 $Name = preg_replace("/[^A-Za-z0-9.]/", '-', $file->getName());
                 $FileName = "public/img/blog/" . $Name;
 
-
                 if (!$file->moveTo($FileName)) {
-                    $this->flashSession->error("An error occurred while uploading the document.");
+                    $this->flashSession->warning("An error occurred while uploading the document.");
                 }
             }
             $blog->blog_image = $Name;
-            $blog->save();
-            $this->flashSession->success('Company successfully updated.');
-            $this->response->redirect("blog");
-            $this->view->disable();
         }
+           
+            if (!$blog->save())
+            {
+                $this->flashSession->error("The form is empty.");
+                $this->view->disable();
+                $this->response->redirect("blog");
+            }else{
+                $this->flashSession->success('Blog data successfully updated.');
+                
+                $this->response->redirect("blog");
+            }
+            
+            
+            
+        
     }
-    public function landingAction()
+    public function showAction()
     {
+        
+        
     }
 
 }

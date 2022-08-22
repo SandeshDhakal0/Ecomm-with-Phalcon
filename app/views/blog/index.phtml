@@ -17,6 +17,8 @@
                 <div class="card-header">
                     <h3 class="card-title">Add Post</h3>
                 </div>
+                <?php echo $this->flashSession->output(); ?>
+
                 <form action='blog/create' method="post" enctype="multipart/form-data">
                     <div class="card-body">
 
@@ -63,6 +65,11 @@
     </section>
 
 </div>
+<script>
+      setTimeout(function(){
+    $('.alert').hide();
+  }, 3000);
+</script>
 
 
 <?php $this->partial('layouts/footer'); ?>
