@@ -1,5 +1,6 @@
 <?php
 use Phalcon\Validation;
+use Phalcon\Paginator\Adapter\QueryBuilder as PaginatorQueryBuilder;
 
 class Blog extends \Phalcon\Mvc\Model
 
@@ -15,6 +16,5 @@ class Blog extends \Phalcon\Mvc\Model
     //    $this->setSource("Blogs");
        
     }
-
 
 }

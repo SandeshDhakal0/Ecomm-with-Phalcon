@@ -22,3 +22,16 @@ $router->add('/show',[
     'controller'=>'blog',
     'action'=>'show'
 ]);
+$router->add('/blogedit/:params',[
+    'controller' => 'blog',
+    'action' => 'edit',
+    'params' => 1
+]);
+$router->add('/blogedit/submit',[
+    'controller' => 'blog',
+    'action' => 'editSubmit'
+]);
+$router->add('/blog/editsubmit',[
+    'controller' => 'blog',
+    'action' => 'editsubmit'
+]);
