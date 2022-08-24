@@ -94,77 +94,6 @@ class BlogController extends ControllerBase
     public function editsubmitAction()
     {
     
-        // if (!$this->request->isPost()) {
-        //     return $this->dispatcher->forward(
-        //         [
-        //             "controller" => "blog",
-        //             "action"     => "edit",
-        //         ]
-        //     );
-        // }
-    
-        // $id = $this->request->getPost("id");
-        // $blog = Blog::findFirstById($id);
-    
-        // if (!$blog) {
-        //     $this->flash->error(
-        //         "blog does not exist"
-        //     );
-    
-        //     return $this->dispatcher->forward(
-        //         [
-        //             "controller" => "blog",
-        //             "action"     => "edit",
-        //         ]
-        //     );
-        // }
-    
-        // $form = new Blog();
-    
-        // $data = $this->request->getPost();
-    
-        // // if (!$form->isValid($data, $blog)) {
-        // //     $messages = $form->getMessages();
-    
-        // //     foreach ($messages as $message) {
-        // //         $this->flash->error($message);
-        // //     }
-    
-        // //     return $this->dispatcher->forward(
-        // //         [
-        // //             "controller" => "blog",
-        // //             "action"     => "create",
-        // //         ]
-        // //     );
-        // // }
-    
-        // if ($blog->save() === false) {
-        //     $messages = $blog->getMessages();
-    
-        //     foreach ($messages as $message) {
-        //         $this->flash->error($message);
-        //     }
-    
-        //     return $this->dispatcher->forward(
-        //         [
-        //             "controller" => "blog",
-        //             "action"     => "edit",
-        //         ]
-        //     );
-        // }
-    
-        // $form->clear();
-    
-        // $this->flash->success(
-        //     "Product was updated successfully"
-        // );
-    
-        // return $this->dispatcher->forward(
-        //     [
-        //         "controller" => "blog",
-        //         "action"     => "index",
-        //     ]
-        // );
         $id = $this->request->getPost('id');
         $blog = Blog::findFirstById($id);
         $title = $this->request->getPost('title');
@@ -181,6 +110,11 @@ class BlogController extends ControllerBase
                     $this->flashSession->warning("An error occurred while uploading the document.");
                 }
             }
+            // For the delete action while uploading a new image
+            $fetchImgTitleName = $blog->blog_image;
+            $createDeletePath = "public/img/blog/".$fetchImgTitleName;
+            unlink($createDeletePath);
+            //saving the file
             $blog->blog_image = $Name;
         }
 
@@ -194,5 +128,16 @@ class BlogController extends ControllerBase
 
             $this->response->redirect("blog");
         }
+    }
+
+    public function deleteAction($id)
+    {
+        $blog = Blog::findFirstById($id);
+        $fetchImgTitleName = $blog->blog_image;
+		$createDeletePath = "public/img/blog/".$fetchImgTitleName;
+		unlink($createDeletePath);
+        $blog->delete();
+        $this->session->destroy();
+        $this->response->redirect("/blog/show");
     }
 }

@@ -35,3 +35,9 @@ $router->add('/blog/editsubmit',[
     'controller' => 'blog',
     'action' => 'editsubmit'
 ]);
+
+$router->add('/blogdelete/:params',[
+    'controller' => 'blog',
+    'action' => 'delete',
+    'params' => 1
+]);
