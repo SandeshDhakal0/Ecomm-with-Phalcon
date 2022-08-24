@@ -140,4 +140,6 @@ class BlogController extends ControllerBase
         $this->session->destroy();
         $this->response->redirect("/blog/show");
     }
+
+   
 }
