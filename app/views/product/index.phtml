@@ -5,62 +5,64 @@
     <p class="card-description">
         Add Product
     </p>
-    <form action='product/create' method="post" enctype="multipart/form-data" class="forms-sample">
+    <div id="msg"></div>
+    <form id="form" action='product/create' method="post" enctype="multipart/form-data" class="forms-sample">
         <div class="form-group">
             <label for="exampleInputName1">Brand</label>
-            <input type="text" class="form-control" id="brand" placeholder="Brand">
+            <input type="text" class="form-control" id="brand" name="brand" placeholder="Brand">
         </div>
         <div class="form-group">
             <label for="exampleInputEmail3">Title</label>
-            <input type="text" class="form-control" id="title" placeholder="Email">
+            <input type="text" class="form-control" id="title" name="title" placeholder="Email">
         </div>
         <!-- Checkbox for size -->
         <div>
             <label for="size">Size</label>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="size[]" value="S">
                 <label class="form-check-label" for="inlineCheckbox1">S</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="size[]" value="M">
                 <label class="form-check-label" for="inlineCheckbox2">M</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="size[]" value="L">
                 <label class="form-check-label" for="inlineCheckbox3">L</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox4" name="size[]" value="XL">
                 <label class="form-check-label" for="inlineCheckbox4">XL</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox5" name="size[]" value="XXL">
                 <label class="form-check-label" for="inlineCheckbox5">XXL</label>
             </div>
         </div>
         <!-- onchange="readURL(this,1)" -->
         <!-- End of Checkbox -->
         <div class="form-group">
-            <label for="files">Select multiple files</label>
-            <input id="files" type="file" multiple="multiple">
+            <label for="files">Upload Product Image</label>
+            <input id="files" type="file" name="image[]" multiple="multiple">
             <output id="previewImg">
         </div>
-        </div>
-    
-        <!-- <div class="card-body">
-            <div class="col" id="preview_image">
-                <img src="#" id="previewImg" alt="Insert Image" style="width: 40%; height:auto;">
-                <img src="#" id="previewImg1" alt="Insert Image" style="width: 40%; height:auto;">
-            </div>
-        </div> -->
+</div>
 
+<label for="dropdown-select">Select Product Category </label>
+<select class="form-select" aria-label="Default select example" id="dropdown-category" name="cat_id">
+    <option selected disabled>Open this select menu</option>
+   <?php foreach($category as $cat){?>
+    <option value="<?php echo $cat['cat_id'] ?>"><?php echo $cat['cat_name'].'-'.$cat['cat_cat'];?></option>
+    <?php } ?>
+</select>
 
 <div class="input-group mb-4">
     <label for="price" class="">Prize</label>
     <div class="input-group-prepend">
         <span class="input-group-text bg-primary text-white">Rs.</span>
     </div>
-    <input type="text" class="form-control" id="product_prize" aria-label="Amount (to the nearest ruppes)">
+    <input type="text" class="form-control" name="prod_price" id="prod_price"
+        aria-label="Amount (to the nearest ruppes)">
     <div class="input-group-append">
         <span class="input-group-text">.00</span>
     </div>
@@ -68,8 +70,8 @@
 
 <div class="form-group">
     <label for="productDescription">Product Description</label>
-    <textarea id="wmd-input" name="post-text" class="form-control-lg" data-editor-type="wmd" cols="80" rows="10"
-        tabindex="101"></textarea>
+    <textarea id="prod_description" name="prod_description" class="form-control-lg" data-editor-type="wmd" cols="80"
+        rows="10" tabindex="101"></textarea>
 </div>
 
 <button type="submit" class="btn btn-primary me-2">Submit</button>
@@ -91,7 +93,9 @@
     width: 50px;
 }
 </style>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 document.querySelector("#files").addEventListener("change", (e) => {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -114,7 +118,26 @@ document.querySelector("#files").addEventListener("change", (e) => {
         alert("Your browser does not support File API");
     }
 });
+// Ajax operation is done here
+$(document).on("submit", "form", function(event) {
+    event.preventDefault();
+    var url2 = $(this).attr("action");
 
+    $.ajax({
+        url: url2,
+        type: 'POST',
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            if (data == "success") {
+                $('#msg').html(
+                    '<span class="alert alert-success">Product Added Successfully</span>');
+                location.reload();
+            }
+        },
+    });
+});
 </script>
 
 

@@ -1,0 +1,56 @@
+<?php $this->partial('layouts/header');?>
+
+
+<div class="card-body col-md-12" style="overflow-x:scroll;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Image</th>
+                <th>Title</th>
+                <th>Brand</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Size</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php foreach ($prod as $p ) { ?>
+
+                <tr>
+                    <td> <?php echo $p['prod_id']; ?></td>
+                    <td> 
+                        <?php 
+                            $img =  json_decode($p['product_image']); 
+                            foreach($img as $image){
+                                echo $image.',';
+                            }
+                        ?>
+                    </td>
+                    <td> <?php echo $p['title']; ?></td>
+                    <td> <?php echo $p['brand']; ?></td>
+                    <td> <?php echo $p['cat_id']; ?></td>
+                    <td> <?php echo $p['prod_price']; ?></td>
+                    <td style="display:flex; margin-top:28px;"> 
+                        <?php 
+                            $s = json_decode($p['size']); 
+                            foreach($s as $size){
+                                echo '<span class="badge badge-info">'.$size.'</span>';
+                            }
+                        ?>
+                    </td>
+                    <td >
+                        <button class="btn btn-xs btn-primary">Edit</button>
+                        <button class="btn btn-xs btn-danger">Delete</button>
+                    </td>
+                </tr>
+            <?php }?>
+        </tbody>
+    </table>
+</div>
+
+
+
+<?php $this->partial('layouts/footer');?>
