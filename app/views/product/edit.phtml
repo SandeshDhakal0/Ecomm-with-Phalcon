@@ -5,55 +5,73 @@
     <p class="card-description">
         Add Product
     </p>
+    <?php echo $this->flashSession->output(); ?>
+
     <div id="msg"></div>
-    <form id="form" action='product/create' method="post" enctype="multipart/form-data" class="forms-sample">
+    <form id="form" action='/prodedit' method="post" enctype="multipart/form-data" class="forms-sample">
         <div class="form-group">
+            <input type="hidden" name="prod_id" value="<?php echo $product['prod_id']; ?>">
             <label for="exampleInputName1">Brand</label>
-            <input type="text" class="form-control" id="brand" name="brand" placeholder="Brand">
+            <input type="text" class="form-control" id="brand" value="<?php echo $product['brand']; ?>" name="brand">
         </div>
         <div class="form-group">
             <label for="exampleInputEmail3">Title</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Email">
+            <input type="text" class="form-control" id="title" value="<?php echo $product['title']; ?>" name="title">
         </div>
         <!-- Checkbox for size -->
         <div>
             <label for="size">Size</label>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="size[]" value="S">
+                <?php $siz = json_decode($product['size']);?>
+
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="size[]" value="S"
+                    <?php foreach($siz as $size) { if($size == 'S') echo "checked"; } ?>>
                 <label class="form-check-label" for="inlineCheckbox1">S</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="size[]" value="M">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="size[]" value="M"
+                    <?php foreach($siz as $size) { if($size == 'M') echo "checked"; } ?>>
                 <label class="form-check-label" for="inlineCheckbox2">M</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="size[]" value="L">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="size[]" value="L"
+                    <?php foreach($siz as $size) { if($size == 'L') echo "checked"; } ?>>
                 <label class="form-check-label" for="inlineCheckbox3">L</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox4" name="size[]" value="XL">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox4" name="size[]" value="XL"
+                    <?php foreach($siz as $size) { if($size == 'XL') echo "checked"; } ?>>
                 <label class="form-check-label" for="inlineCheckbox4">XL</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox5" name="size[]" value="XXL">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox5" name="size[]" value="XXL"
+                    <?php foreach($siz as $size) { if($size == 'XXL') echo "checked"; } ?>>
                 <label class="form-check-label" for="inlineCheckbox5">XXL</label>
             </div>
+
         </div>
-        <!-- onchange="readURL(this,1)" -->
         <!-- End of Checkbox -->
         <div class="form-group">
             <label for="files">Upload Product Image</label>
             <input id="files" type="file" name="image[]" multiple="multiple">
             <output id="previewImg">
+                <?php 
+                     $img =  json_decode($product['product_image']); 
+                        foreach($img as $image){
+                            echo '<img id="editimage" data-id="1" src="../img/product/'.$image.'" width="50px" height="50px">';
+                            }      
+                    ?>
+            </output>
         </div>
 </div>
 
 <label for="dropdown-select">Select Product Category </label>
 <select class="form-select" aria-label="Default select example" id="dropdown-category" name="cat_id">
     <option selected disabled>Open this select menu</option>
-   <?php foreach($category as $cat){?>
-    <option value="<?php echo $cat['cat_id'] ?>"><?php echo $cat['cat_name'].'-'.$cat['cat_cat'];?></option>
-    <?php } ?>
+    <?php  foreach($category as $cat) {  ?>
+    <option value="<?php echo $cat['cat_id'] ?>" <?php if($cat['cat_id'] == $product['cat_id']) echo "selected";?>>
+        <?php  echo $cat['cat_name'].'-'.$cat['cat_cat'];?></option>
+    <?php }?>
 </select>
 
 <div class="input-group mb-4">
@@ -62,7 +80,7 @@
         <span class="input-group-text bg-primary text-white">Rs.</span>
     </div>
     <input type="text" class="form-control" name="prod_price" id="prod_price"
-        aria-label="Amount (to the nearest ruppes)">
+        value="<?php echo $product['prod_price'];?>" aria-label="Amount (to the nearest ruppes)">
     <div class="input-group-append">
         <span class="input-group-text">.00</span>
     </div>
@@ -71,7 +89,7 @@
 <div class="form-group">
     <label for="productDescription">Product Description</label>
     <textarea id="prod_description" name="prod_description" class="form-control-lg" data-editor-type="wmd" cols="80"
-        rows="10" tabindex="101"></textarea>
+        rows="10" tabindex="101"><?php echo $product['prod_description']; ?></textarea>
 </div>
 
 <button type="submit" class="btn btn-primary me-2">Submit</button>
@@ -82,6 +100,12 @@
 </div>
 
 <style>
+#editimage {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+}
+
 #previewImg {
     display: flex;
     gap: 10px;
@@ -100,6 +124,7 @@
 
 <script>
 document.querySelector("#files").addEventListener("change", (e) => {
+    $('#previewImg').empty();
     if (window.File && window.FileReader && window.FileList && window.Blob) {
         const files = e.target.files;
         const output = document.querySelector("#previewImg");
@@ -134,7 +159,7 @@ $(document).on("submit", "form", function(event) {
         success: function(data) {
             if (data == "success") {
                 $('#msg').html(
-                    '<span class="alert alert-success">Product Added Successfully</span>');
+                    '<span class="alert alert-success">Product Updated Successfully</span>');
                 location.reload();
             }
         },

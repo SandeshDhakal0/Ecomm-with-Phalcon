@@ -20,9 +20,14 @@ class Product extends \Phalcon\Mvc\Model
     public $cat_id;
 
 
-    public function initialize()
-    {
-
+    
+    public function findProductId($id){
+        $this->setSource('product');
+        $result = $this->find('prod_id='.$id);
+        if($result){
+            return $result->toArray()[0];
+        }else
+        return null;
     }
     public function allCategory(){
         $this->setSource('category');
@@ -35,11 +40,20 @@ class Product extends \Phalcon\Mvc\Model
     public function findCategoryById($cat_id){
         $this->setSource('category');
         $result = $this->find('cat_id='.$cat_id);
-       
         if($result){
             return $result->toArray()[0];
         }else
         return null;
     }    
 
+    public function saveProduct($data){
+        $this->setSource('product');
+        $this->save($data);
+        if($this->save($data)==false){
+            $this->getMessages();
+            return false;
+        }else{
+            return $this->id;
+        }
+    }
 }

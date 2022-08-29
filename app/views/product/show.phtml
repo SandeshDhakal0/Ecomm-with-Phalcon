@@ -16,37 +16,42 @@
             </tr>
         </thead>
 
-        <tbody >
+        <tbody>
             <?php foreach ($prod as $p ) { ?>
 
-                <tr>
-                    <td> <?php echo $p['prod_id']; ?></td>
-                    <td id="files"> 
+            <tr>
+                <td> <?php echo $p['prod_id']; ?></td>
+                <td>
+                    <div id="files" for="files" style=display:flex;>
                         <?php 
                             $img =  json_decode($p['product_image']); 
                             foreach($img as $image){
-                                echo $image.',';
-                            }
-                        ?>
-                        <output id="previewImg">
-                    </td>
-                    <td> <?php echo $p['title']; ?></td>
-                    <td> <?php echo $p['brand']; ?></td>
-                    <td> <?php echo $p['cat_id']; ?></td>
-                    <td> <?php echo $p['prod_price']; ?></td>
-                    <td style="display:flex; margin-top:28px;"> 
-                        <?php 
+                                echo '<img src="../img/product/'.$image.'" width="200px" height="200px">';
+                            }      
+                         ?>
+                    </div>
+                </td>
+                <td> <?php echo $p['title']; ?></td>
+                <td> <?php echo $p['brand']; ?></td>
+                <td> <?php echo $p['cat_id']; ?></td>
+                <td> <?php echo $p['prod_price']; ?></td>
+                <td style="display:flex; margin-top:28px;">
+                    <?php 
                             $s = json_decode($p['size']); 
                             foreach($s as $size){
                                 echo '<span class="badge badge-info">'.$size.'</span>';
                             }
                         ?>
-                    </td>
-                    <td >
-                        <button class="btn btn-xs btn-primary">Edit</button>
-                        <button class="btn btn-xs btn-danger">Delete</button>
-                    </td>
-                </tr>
+                </td>
+                <td>
+                    <a href="/prodedit/<?php echo $p['prod_id'] ?>" class="btn btn-sm btn-danger">
+                        <i class="fa fa-2x fa-edit"></i>
+                    </a>
+                    <a href="/proddelete/<?php echo $p['prod_id'] ?>" class="btn btn-sm btn-success">
+                        <i class="fa fa-danger fa-2x fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
             <?php }?>
         </tbody>
     </table>
@@ -76,5 +81,22 @@ document.querySelector("#files").addEventListener("change", (e) => {
 });
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+</script>
+<!-- 
+<style>
+#previewImg {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.thumbnail {
+    height: 50px;
+    width: 50px;
+}
+</style> -->
 
 <?php $this->partial('layouts/footer');?>

@@ -41,3 +41,15 @@ $router->add('/blogdelete/:params',[
     'action' => 'delete',
     'params' => 1
 ]);
+
+$router->add('/prodedit/:params',[
+    'controller' => 'product',
+    'action' => 'edit',
+    'params' => 1
+]);
+
+$router->add('/proddelete/:params',[
+    'controller' => 'product',
+    'action' => 'delete',
+    'params' => 1
+]);
