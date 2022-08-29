@@ -16,18 +16,19 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody >
             <?php foreach ($prod as $p ) { ?>
 
                 <tr>
                     <td> <?php echo $p['prod_id']; ?></td>
-                    <td> 
+                    <td id="files"> 
                         <?php 
                             $img =  json_decode($p['product_image']); 
                             foreach($img as $image){
                                 echo $image.',';
                             }
                         ?>
+                        <output id="previewImg">
                     </td>
                     <td> <?php echo $p['title']; ?></td>
                     <td> <?php echo $p['brand']; ?></td>
@@ -51,6 +52,29 @@
     </table>
 </div>
 
+<script>
+document.querySelector("#files").addEventListener("change", (e) => {
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+        const files = e.target.files;
+        const output = document.querySelector("#previewImg");
+        output.innerHTML = "";
+        for (let i = 0; i < files.length; i++) {
+            if (!files[i].type.match("image")) continue;
+            const picReader = new FileReader();
+            picReader.addEventListener("load", function(event) {
+                const picFile = event.target;
+                const div = document.createElement("div");
+                div.innerHTML =
+                    `<img class="thumbnail" src="${picFile.result}" title="${picFile.name}"/>`;
+                output.appendChild(div);
+            });
+            picReader.readAsDataURL(files[i]);
+        }
+    } else {
+        alert("Your browser does not support File API");
+    }
+});
+</script>
 
 
 <?php $this->partial('layouts/footer');?>
