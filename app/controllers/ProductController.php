@@ -131,18 +131,16 @@ class ProductController extends ControllerBase
 
     public function deleteAction($id)
     {
-        $prod = new Product();
-        $product = $prod->findProductId($id); 
-        // $products = $prod->toArray();
-    //     $imgs = json_decode($product['product_image']);
-    // foreach($imgs as $fetchImgTitleName){
-    //    $createDeletePath = "public/img/product/".$fetchImgTitleName;
-    //    unlink($createDeletePath);
-     if($product){
-        $product->delete();
-        $this->session->destroy();
-       $this->response->redirect("/product/show");
-    }  
-      echo "The product is not found"; 
-    }
-}
+        // $prod = new Product();
+        $data = Product::find('prod_id='.$id)[0];
+       
+        if($data){
+            $image = json_decode($data->product_image);
+            foreach($image as $img){
+                $createDeletePath = "public/img/product/".$img;
+                unlink($createDeletePath);
+            }
+            $data->delete();
+            return $this->response->redirect("product/show");
+        }
+    }}
