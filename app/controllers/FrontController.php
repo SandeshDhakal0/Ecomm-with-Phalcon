@@ -11,28 +11,29 @@ class FrontController extends ControllerBase
 {
     public function initialize()
     {
-        $page = $_GET['page'] ?? 1;
-        $data = Product::find()->toArray();
+        // $page = $_GET['page'] ?? 1;
+        // $data = Product::find()->toArray();
 
-        $currentPage = $page;
-        $paginator = new NativeArray(
-        [
-            "data" => $data,
-            "limit" => 4,
-            "page" => $currentPage,
-        ]);
+        // $currentPage = $page;
+        // $paginator = new NativeArray(
+        // [
+        //     "data" => $data,
+        //     "limit" => 4,
+        //     "page" => $currentPage,
+        // ]);
            
-        $paginate = $paginator->paginate();
-        //  echo "<pre>";
-        //  var_dump($paginate);
-        //  echo "<pre>";
-        //  die();
+        // $paginate = $paginator->paginate();
+        // //  echo "<pre>";
+        // //  var_dump($paginate);
+        // //  echo "<pre>";
+        // //  die();
 
-        $this->view->blog = $paginate;
+        // $this->view->blog = $paginate;
     }
    
     public function indexAction()
     {
+        // $data = User::findFirst();
         $prod = Product::find();
         $this->view->setVar('product',$prod);
     }
@@ -53,7 +54,11 @@ class FrontController extends ControllerBase
 
     public function cartAction()
     {
-      echo "this is the cart";
+       $prod_id = intval($this->request->get('prod_id'));
+       
+      $data = Product::findFirst('prod_id='.$prod_id);
+      $product = $data->toArray();
+      return $this->response->setJsonContent($product);
     }
     
 }
