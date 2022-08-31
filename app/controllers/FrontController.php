@@ -50,5 +50,10 @@ class FrontController extends ControllerBase
         $data = Blog::find();
         $this->view->blog = $data; 
     }
+
+    public function cartAction()
+    {
+      echo "this is the cart";
+    }
     
 }
