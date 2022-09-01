@@ -178,7 +178,7 @@
                         <div class="row">
                             <!-- Single Product -->
                             <?php foreach ($product as $products) { ?>
-                            <div class="col-12 col-sm-6 col-lg-4 ">
+                            <div class="col-12 col-sm-6 col-lg-4 shop-item ">
                                 <div class="single-product-wrapper">
                                     <!-- Product Image -->
                                     <div class="product-img">
@@ -191,7 +191,7 @@
 
                                         <!-- Product Badge -->
                                         <div class="product-badge offer-badge">
-                                            <span>-30%</span>
+                                            <span></span>
                                         </div>
                                         <!-- Favourite -->
                                         <div class="product-favourite">
@@ -216,7 +216,7 @@
                                             <!-- Add to Cart -->
                                             <div id="div1" class="add-to-cart-btn">
                                                 <!-- <a href="#" class="btn essence-btn">Add to Cart</a> -->
-                                                <button type="submit" class="btn essence-btn" name="add"
+                                                <button type="submit" class="btn essence-btn shop-item-button" name="add"
                                                     data-id="<?php echo $products->prod_id;?>">Add To Cart
                                                 </button>
                                             </div>
@@ -345,7 +345,7 @@
             $("button").click(function() {
                 var prod_id = $(this).data('id');
                 $.ajax({
-                    url: "/front/cart",
+                    url: "cart",
                     type:"GET",
                     data: {
                         "prod_id": prod_id
@@ -353,9 +353,9 @@
                     success: function(result) {
                         console.log(result);
                         $('#cartModal').modal('toggle');
-                        // img = JSON.parse(result.product_image)[0];
+                        img = JSON.parse(result.product_image)[0];
                         // console.log(img)
-                        // $('img.prodimg').attr('src',"../img/product/"+img);
+                        $('img.prodimg').attr('src',"../img/product/"+img);
                         $('.product_title').text(result.title);
                         $('.product_price').text(result.prod_price);
 
