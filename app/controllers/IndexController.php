@@ -34,6 +34,7 @@ class IndexController extends ControllerBase
         echo $this->session->get('name');
     }
 
+
     public function removeSessionAction()
     {
         $this->session->remove('name');

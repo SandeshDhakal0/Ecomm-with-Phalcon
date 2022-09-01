@@ -52,6 +52,14 @@ class FrontController extends ControllerBase
         $this->view->blog = $data; 
     }
 
-   
+    public function cartAction()
+    {
+        $prod_id = intval($this->request->get('prod_id'));
+        $data = Product::findFirst('prod_id=' . $prod_id);
+        $product = $data->toArray();
+       
+        return $this->response->setJsonContent($product);
+    }
+
     
 }
