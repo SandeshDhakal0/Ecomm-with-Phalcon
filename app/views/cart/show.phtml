@@ -74,8 +74,21 @@ function ready() {
 }
 
 function removeCartItem(event) {
+    
     var buttonClicked = event.target
     buttonClicked.parentElement.parentElement.remove()
+    sess_data = JSON.parse(sessionStorage.getItem("carts")) || [];
+                        JSON.stringify(sess_data)
+                        var newDatas = [];
+                        for(i = 0; i<sess_data.length; i++){
+                            if(sess_data[i][0] != $(event.target).data('id')){
+                                newDatas.push(sess_data[i]);
+                            }
+                        }
+                        sessionStorage.setItem("carts", JSON.stringify(newDatas))
+                       
+                       
+                        
     // $('.cart-row').css('display','none');
     updateCartTotal()
 }
