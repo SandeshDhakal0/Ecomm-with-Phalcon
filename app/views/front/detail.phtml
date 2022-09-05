@@ -18,10 +18,10 @@
         <div class="single_product_desc clearfix">
             <span>mango</span>
             <a href="cart.html">
-                <h2>One Shoulder Glitter Midi Dress</h2>
+                <h2><?php echo $products['title'];?></h2>
             </a>
-            <p class="product-price"><span class="old-price">$65.00</span> $49.00</p>
-            <p class="product-desc">Mauris viverra cursus ante laoreet eleifend. Donec vel fringilla ante. Aenean finibus velit id urna vehicula, nec maximus est sollicitudin.</p>
+            <p class="product-price"><span class="old-price">$65.00</span> <?php echo $products['prod_price']; ?></p>
+            <p class="product-desc"><?php echo $products['prod_description'] ?></p>
 
             <!-- Form -->
             <form class="cart-form clearfix" method="post">

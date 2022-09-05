@@ -67,7 +67,6 @@ class FrontController extends ControllerBase
         $data = Product::findFirst('prod_id=' .$prod_id);
         $product = $data->toArray();
         $this->view->setVar('products',$product);
-        
     }
     
 }
