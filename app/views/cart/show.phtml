@@ -1,13 +1,13 @@
 <!-- <form action="cart/show" method="get"> -->
-    <section class="container content-section ">
-        <h2 class="section-header">CART</h2>
-        <div class="cart-row">
-            <span class="cart-item cart-header cart-column">ITEM</span>
-            <span class="cart-price cart-header cart-column">PRICE</span>
-            <span class="cart-quantity cart-header cart-column">QUANTITY</span>
-        </div>
-        <div class="cart-items">
-            <!-- <div class="cart-row">
+<section class="container content-section ">
+    <h2 class="section-header">CART</h2>
+    <div class="cart-row">
+        <span class="cart-item cart-header cart-column">ITEM</span>
+        <span class="cart-price cart-header cart-column">PRICE</span>
+        <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+    </div>
+    <div class="cart-items">
+        <!-- <div class="cart-row">
                 <div class="cart-item cart-column">
                     <img class="cart-item-image prodimg" width="100" height="100">
                     <span class="cart-item-title product_title"></span>
@@ -18,7 +18,7 @@
                     <button class="btn btn-danger" type="button">REMOVE</button>
                 </div>
             </div> -->
-            <!-- <div class="cart-row">
+        <!-- <div class="cart-row">
                             <div class="cart-item cart-column">
                                 <img class="cart-item-image prodimg "  width="100" height="100">
                                 <span class="cart-item-title product_title"></span>
@@ -29,13 +29,13 @@
                                 <button class="btn btn-danger" type="button">REMOVE</button>
                             </div>
                         </div> -->
-        </div>
-        <div class="cart-total">
-            <strong class="cart-total-title">Total</strong>
-            <span class="cart-total-price">$39.97</span>
-        </div>
-        <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
-<!-- </form> -->
+    </div>
+    <div class="cart-total">
+        <strong class="cart-total-title">Total</strong>
+        <span class="cart-total-price"></span>
+    </div>
+    <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
+    <!-- </form> -->
 </section>
 
 
@@ -43,7 +43,7 @@
 // sessionStorage.setItem("prod_id", "id");
 
 // $(document).ready(function() {
-    //   $('#cartModal').modal('show');
+//   $('#cartModal').modal('show');
 
 // });
 // For button and cart action event
@@ -65,30 +65,28 @@ function ready() {
         var input = quantityInputs[i]
         input.addEventListener('change', quantityChanged)
     }
-//     var addToCartButtons = document.getElementsByClassName('shop-item-button')
-//     for (var i = 0; i < addToCartButtons.length; i++) {
-//         var button = addToCartButtons[i]
-//         button.addEventListener('click', addToCartClicked)
-//     }
-// }
+    //     var addToCartButtons = document.getElementsByClassName('shop-item-button')
+    //     for (var i = 0; i < addToCartButtons.length; i++) {
+    //         var button = addToCartButtons[i]
+    //         button.addEventListener('click', addToCartClicked)
+    //     }
+    // }
 }
 
 function removeCartItem(event) {
-    
+
     var buttonClicked = event.target
     buttonClicked.parentElement.parentElement.remove()
     sess_data = JSON.parse(sessionStorage.getItem("carts")) || [];
-                        JSON.stringify(sess_data)
-                        var newDatas = [];
-                        for(i = 0; i<sess_data.length; i++){
-                            if(sess_data[i][0] != $(event.target).data('id')){
-                                newDatas.push(sess_data[i]);
-                            }
-                        }
-                        sessionStorage.setItem("carts", JSON.stringify(newDatas))
-                       
-                       
-                        
+    JSON.stringify(sess_data)
+    var newDatas = [];
+    for (i = 0; i < sess_data.length; i++) {
+        if (sess_data[i][0] != $(event.target).data('id')) {
+            newDatas.push(sess_data[i]);
+        }
+    }
+    sessionStorage.setItem("carts", JSON.stringify(newDatas))
+
     // $('.cart-row').css('display','none');
     updateCartTotal()
 }
@@ -109,11 +107,11 @@ function quantityChanged(event) {
 //     console.log(title)
 // }
 
-function addItemToCart(event) {
-    var cartRow = document.createElement('div')
-    var cartItems = document.getElementsByClassName('cart-items')[0]
-    cartItems.append(cartRow)
-}
+// function addItemToCart(event) {
+//     var cartRow = document.createElement('div')
+//     var cartItems = document.getElementsByClassName('cart-items')[0]
+//     cartItems.append(cartRow)
+// }
 
 function updateCartTotal() {
     var cartItemContainer = document.getElementsByClassName('cart-items')[0]
