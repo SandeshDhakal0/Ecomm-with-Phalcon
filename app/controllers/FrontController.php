@@ -61,13 +61,13 @@ class FrontController extends ControllerBase
         return $this->response->setJsonContent($product);
     }
 
-    public function detailAction()
+    public function detailAction($id)
     {
-        $prod_id = intval($this->request->get('prod_id'));
+        $prod_id = $id;
         $data = Product::findFirst('prod_id=' .$prod_id);
         $product = $data->toArray();
-
-        return $this->response->setJsonContent($product);
+        $this->view->setVar('products',$product);
+        
     }
     
 }

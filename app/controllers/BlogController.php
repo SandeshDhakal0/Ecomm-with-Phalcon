@@ -12,7 +12,7 @@ class BlogController extends ControllerBase
 
     public function initialize()
     {
-        $this->blog = new Blog();
+        // $this->blog = new Blog();
     }
     public function indexAction()
     {
@@ -140,6 +140,4 @@ class BlogController extends ControllerBase
         $this->session->destroy();
         $this->response->redirect("/blog/show");
     }
-
-   
 }

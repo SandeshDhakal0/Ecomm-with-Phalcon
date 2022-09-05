@@ -6,11 +6,11 @@
     <section class="single_product_details_area d-flex align-items-center">
 
         <!-- Single Product Thumb -->
-        <?php foreach($product as $products) {?>
+        
         <div class="single_product_thumb clearfix">
-            <div class="product_thumbnail_slides owl-carousel">
-                <img src="../img/product/<?php echo json_decode($products->product_image)[0];?>" >
-                <img src="../img/product/<?php echo json_decode($products->product_image)[0];?>">
+            <div class="product_thumbnail_slides owl-carousel ml-4 pl-4">
+                <img src="../img/product/<?php echo json_decode($products['product_image'])[0];?>"  style="height:500px; width:500px;">
+                <img src="../img/product/<?php echo json_decode($products['product_image'])[1];?>" style="height:500px; width:500px;">
                 <!-- <img src="img/product-img/product-big-3.jpg" alt=""> -->
             </div>
         </div>
@@ -46,7 +46,7 @@
                 </div>
             </form>
         </div>
-        <?php }?>
+        
     </section>
     <!-- ##### Single Product Details Area End ##### -->
 

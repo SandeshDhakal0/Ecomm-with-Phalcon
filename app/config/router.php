@@ -53,3 +53,9 @@ $router->add('/proddelete/:params',[
     'action' => 'delete',
     'params' => 1
 ]);
+
+$router->add('/details/:params',[
+    'controller' => 'front',
+    'action' => 'detail',
+    'params' => 1
+]);
