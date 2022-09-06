@@ -1,8 +1,9 @@
 <?php
 
 use Phalcon\Acl\Adapter\Memory;
+use Phalcon\Mvc\Controller;
 
-class SigninController extends ControllerBase
+class SigninController extends Controller
 {
 
     public function indexAction()
@@ -42,6 +43,7 @@ class SigninController extends ControllerBase
             if ($user->password == $this->request->getPost('password')) {
                 $this->session->set('id', $user->id);
                 $this->session->set('role', $user->role);
+                var_dump($this->session->get('id'));
                 if ($user->role == 'admin') {
                     $this->response->redirect("dashboard");
                 }
